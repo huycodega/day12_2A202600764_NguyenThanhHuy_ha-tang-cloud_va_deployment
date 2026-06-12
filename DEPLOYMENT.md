@@ -74,3 +74,4 @@ curl https://aware-respect-production.up.railway.app/ready
 - [Railway deployment dashboard](screenshots/Dashboard.png)
 - [Service running on Railway](screenshots/running.PNG)
 - [Health endpoint response](screenshots/test.png)
+- [Chat UI — agent responding to question](screenshots/Test2_giaodien.png)
