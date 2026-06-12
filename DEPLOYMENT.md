@@ -2,16 +2,13 @@
 
 ## Public URL
 
-> **Note:** Deploy trên Render — URL sẽ có dạng `https://ai-agent-production-xxxx.onrender.com`  
-> Điền URL thật sau khi deploy xong bên dưới:
-
 ```
-https://ai-agent-production-<hash>.onrender.com
+https://aware-respect-production.up.railway.app
 ```
 
 ## Platform
 
-**Render** (render.com) — Free starter plan, auto-deploy từ GitHub
+**Railway** (railway.com) — $5 free credit, deploy từ CLI
 
 ## Source Code
 
@@ -46,13 +43,13 @@ Subdirectory: `06-lab-complete/`
 
 ### Health Check
 ```bash
-curl https://ai-agent-production-<hash>.onrender.com/health
+curl https://ai-agent-production-aware-respect-production.up.railway.app/.onrender.com/health
 # Expected: {"status":"ok","version":"1.0.0","environment":"production",...}
 ```
 
 ### Authentication required (no key → 401)
 ```bash
-curl -X POST https://ai-agent-production-<hash>.onrender.com/ask \
+curl -X POST https://ai-agent-production-aware-respect-production.up.railway.app/.onrender.com/ask \
   -H "Content-Type: application/json" \
   -d '{"question": "hello"}'
 # Expected: {"detail":"Invalid or missing API key..."}
@@ -60,7 +57,7 @@ curl -X POST https://ai-agent-production-<hash>.onrender.com/ask \
 
 ### API Test (with authentication)
 ```bash
-curl -X POST https://ai-agent-production-<hash>.onrender.com/ask \
+curl -X POST https://ai-agent-production-aware-respect-production.up.railway.app/.onrender.com/ask \
   -H "X-API-Key: YOUR_AGENT_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"question": "What is production deployment?"}'
@@ -71,7 +68,7 @@ curl -X POST https://ai-agent-production-<hash>.onrender.com/ask \
 ```bash
 for i in {1..22}; do
   curl -s -o /dev/null -w "Request $i: %{http_code}\n" \
-    -X POST https://ai-agent-production-<hash>.onrender.com/ask \
+    -X POST https://ai-agent-production-aware-respect-production.up.railway.app/.onrender.com/ask \
     -H "X-API-Key: YOUR_KEY" \
     -H "Content-Type: application/json" \
     -d '{"question":"test"}'
@@ -81,7 +78,7 @@ done
 
 ### Readiness check
 ```bash
-curl https://ai-agent-production-<hash>.onrender.com/ready
+curl https://ai-agent-production-aware-respect-production.up.railway.app/.onrender.com/ready
 # Expected: {"ready":true}
 ```
 
