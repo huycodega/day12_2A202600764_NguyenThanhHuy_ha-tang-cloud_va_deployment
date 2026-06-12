@@ -24,12 +24,11 @@ Kết hợp TẤT CẢ những gì đã học trong 1 project hoàn chỉnh.
 ```
 06-lab-complete/
 ├── app/
-│   ├── main.py         # Entry point — kết hợp tất cả
-│   ├── config.py       # 12-factor config
-│   ├── auth.py         # API Key + JWT
-│   ├── rate_limiter.py # Rate limiting
-│   └── cost_guard.py   # Budget protection
-├── Dockerfile          # Multi-stage, production-ready
+│   ├── main.py         # Entry point — auth, rate limit, cost guard, health, shutdown
+│   └── config.py       # 12-factor config từ env vars
+├── utils/
+│   └── mock_llm.py     # Mock LLM (thay bằng OpenAI trong production thật)
+├── Dockerfile          # Multi-stage, production-ready (56MB)
 ├── docker-compose.yml  # Full stack
 ├── railway.toml        # Deploy Railway
 ├── render.yaml         # Deploy Render
