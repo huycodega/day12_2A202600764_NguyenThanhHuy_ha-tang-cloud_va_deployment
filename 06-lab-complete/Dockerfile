@@ -2,7 +2,7 @@
 # Production Dockerfile — Multi-stage, < 500 MB, non-root
 # ============================================================
 
-# Stage 1: Builder
+# Stage 1: Builder — install deps to /install prefix
 FROM python:3.11-slim AS builder
 
 WORKDIR /build
@@ -11,19 +11,19 @@ RUN apt-get update && apt-get install -y gcc libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir --user -r requirements.txt
+RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
 
 
-# Stage 2: Runtime
+# Stage 2: Runtime — copy only what's needed to run
 FROM python:3.11-slim AS runtime
 
 # Non-root user
-RUN groupadd -r agent && useradd -r -g agent -d /app agent
+RUN groupadd -r agent && useradd -r -g agent agent
 
 WORKDIR /app
 
-# Copy packages từ builder
-COPY --from=builder /root/.local /home/agent/.local
+# Copy packages từ builder vào /usr/local (system-wide, no PATH issues)
+COPY --from=builder /install /usr/local
 
 # Copy application
 COPY app/ ./app/
@@ -33,14 +33,12 @@ RUN chown -R agent:agent /app
 
 USER agent
 
-ENV PATH=/home/agent/.local/bin:$PATH
 ENV PYTHONPATH=/app
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 EXPOSE 8000
 
-# Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
     CMD python -c \
     "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" \
