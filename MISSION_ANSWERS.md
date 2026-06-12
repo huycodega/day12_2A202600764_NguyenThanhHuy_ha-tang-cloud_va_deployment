@@ -1,7 +1,7 @@
 # Day 12 Lab - Mission Answers
 
-**Student Name:** Hieu Nguyen
-**Student ID:** 2A202600680
+**Student Name:** Nguyen Thanh Huy
+**Student ID:** 2A202600764
 **Date:** 2026-06-12
 
 ---
@@ -92,23 +92,23 @@ Client (browser/curl)
 
 ## Part 3: Cloud Deployment
 
-### Exercise 3.1: Railway / Render deployment
+### Exercise 3.1: Railway deployment
 
-**Platform:** Render  
-**URL:** https://day12-ha-tang-cloud-va-deployment.onrender.com *(sau khi deploy)*
+**Platform:** Railway  
+**URL:** https://aware-respect-production.up.railway.app
 
 **Steps thực hiện:**
 1. Push code lên GitHub (đã có fork tại `Zilexz/day12_ha-tang-cloud_va_deployment`)
-2. Vào [render.com](https://render.com) → New → Blueprint
-3. Connect GitHub repo → Render đọc `06-lab-complete/render.yaml`
-4. Set secrets: `AGENT_API_KEY`, `JWT_SECRET`
-5. Deploy → nhận public URL
+2. Cài Railway CLI: `npm i -g @railway/cli`
+3. Login và init project: `railway login` → `railway init`
+4. Set secrets: `railway variables set AGENT_API_KEY=day12-secret-key-hieu` + `JWT_SECRET`
+5. Deploy: `railway up` → nhận public URL: `https://aware-respect-production.up.railway.app`
 
 **Test commands:**
 ```bash
-curl https://<your-app>.onrender.com/health
-curl -X POST https://<your-app>.onrender.com/ask \
-  -H "X-API-Key: YOUR_KEY" \
+curl https://aware-respect-production.up.railway.app/health
+curl -X POST https://aware-respect-production.up.railway.app/ask \
+  -H "X-API-Key: day12-secret-key-hieu" \
   -H "Content-Type: application/json" \
   -d '{"question": "What is Docker?"}'
 ```
